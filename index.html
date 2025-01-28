@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heron's Formula Calculator</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #e67e22;
+            --hover-primary: #2980b9;
+            --hover-secondary: #d35400;
+            --text-color: #34495e;
+            --background-color: #ffffff;
+            --banner-bg: #ffffff;
+            --banner-text: #ffffff;
+            --error-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f1c40f;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .banner {
+            background-color: var(--banner-bg);
+            color: var(--banner-text);
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: none;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: center;
+            color: var(--banner-text);
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: none;
+            gap: 20px;
+            align-items: center;
+            border: none;
+        }
+
+        label {
+            margin: 8px 0 4px;
+            font-weight: 600;
+            color: #000000;
+            text-shadow: none;
+            font-size: 1em;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        input[type="number"] {
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color: var(--text-color);
+            transition: none;
+            width: 80%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input[type="number"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: none;
+            width: 60%;
+            max-width: 220px;
+            align-self: center;
+            margin: 0 auto;
+            box-shadow: none;
+        }
+        button:hover {
+            background-color: var(--primary-color);
+            transform: none;
+        }
+        button:active {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #result, #calculation {
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 50px;
+            width: 90%;
+            max-width: 800px;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+            box-shadow: none;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.1em;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        .error {
+            color: var(--error-color);
+            font-weight: bold;
+        }
+        .success {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        .warning {
+            color: var(--warning-color);
+            font-weight: bold;
+        }
+
+        .content-section {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: none;
+            transition: background-color 0.3s ease;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .content-section:hover {
+            background-color: #ffffff;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            text-align: center;
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            text-align: center;
+            color: var(--text-color);
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        li {
+            margin-bottom: 8px;
+            list-style: none;
+            position: relative;
+            padding-left: 20px;
+        }
+        ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 1em;
+            color: #666666;
+            margin-top: 30px;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: var(--hover-primary);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+            p, li {
+                font-size: 1.05em;
+            }
+            #result, #calculation {
+                width: 85%;
+                max-width: 700px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            p, li {
+                font-size: 1em;
+            }
+            input[type="number"], button, #result, #calculation {
+                width: 100%;
+                max-width: none;
+            }
+            form {
+                padding: 20px;
+            }
+            .banner {
+                padding: 25px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner {
+                padding: 30px 10px;
+            }
+            form {
+                padding: 20px;
+            }
+            button {
+                width: 80%;
+                max-width: none;
+            }
+            input[type="number"] {
+                width: 90%;
+                max-width: none;
+            }
+            .content-section {
+                padding: 15px;
+            }
+        }
+
+        ::selection {
+            background: transparent;
+            color: inherit;
+        }
+
+        .banner p, h1, h2, p, label, .footer p {
+            color: #333333;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        function calculateArea() {
+            const a = parseFloat(document.getElementById('sideA').value);
+            const b = parseFloat(document.getElementById('sideB').value);
+            const c = parseFloat(document.getElementById('sideC').value);
+            if (a + b <= c) {
+                document.getElementById('result').innerHTML = '<span class="error">a + b must be greater than c</span>';
+                document.getElementById('calculation').innerHTML = '';
+                return;
+            }
+            if (a + c <= b) {
+                document.getElementById('result').innerHTML = '<span class="error">a + c must be greater than b</span>';
+                document.getElementById('calculation').innerHTML = '';
+                return;
+            }
+            if (b + c <= a) {
+                document.getElementById('result').innerHTML = '<span class="error">b + c must be greater than a</span>';
+                document.getElementById('calculation').innerHTML = '';
+                return;
+            }
+            const s = (a + b + c) / 2;
+            const area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+            const perimeter = a + b + c;
+            let type = '';
+            if (a === b && b === c) {
+                type = 'Equilateral Triangle';
+            } else if (a === b || a === c || b === c) {
+                type = 'Isosceles Triangle';
+            } else {
+                type = 'Scalene Triangle';
+            }
+            document.getElementById('result').innerHTML = `Area: ${area.toFixed(2)}<br>Perimeter: ${perimeter.toFixed(2)}<br>Type: ${type}`;
+            
+            const latexSteps = `
+                Calculating semi-perimeter:
+                $$s = \\frac{a + b + c}{2} = \\frac{${a} + ${b} + ${c}}{2} = ${s}$$
+                
+                Calculating area:
+                $$\\text{Area} = \\sqrt{s(s - a)(s - b)(s - c)} = \\sqrt{${s}(${s} - ${a})(${s} - ${b})(${s} - ${c})} = ${area.toFixed(2)}$$
+            `;
+            document.getElementById('calculation').innerHTML = latexSteps;
+            MathJax.typeset();
+        }
+    </script>
+</head>
+<body>
+    <h1>Heron's Formula Calculator</h1>
+    <form onsubmit="calculateArea(); return false;" class="content-section">
+        <label for="sideA">Side a:</label>
+        <input type="number" id="sideA" step="any" required>
+        <label for="sideB">Side b:</label>
+        <input type="number" id="sideB" step="any" required>
+        <label for="sideC">Side c:</label>
+        <input type="number" id="sideC" step="any" required>
+        <button type="submit">Calculate Area</button>
+    </form>
+    <div id="result" class="content-section"></div>
+    <div id="calculation" class="content-section"></div>
+    <hr>
+    <div class="content-section">
+        <h2>What is Heron's Formula?</h2>
+        <p>Heron's Formula is used to calculate the area of a triangle when the lengths of all three sides are known, with the formula:</p>
+        <p>$$\text{Area} = \sqrt{s(s - a)(s - b)(s - c)}$$</p>
+        <p>Where s is the semi-perimeter, given by:</p>
+        <p>$$s = \frac{a + b + c}{2}$$</p>
+    </div>
+    <div class="content-section">
+        <h2>How to Use This Calculator</h2>
+        <p>Enter the lengths of the three sides of a triangle, click the "Calculate Area" button, and the system will display the calculated area, perimeter, and type of triangle, along with a detailed calculation process.</p>
+    </div>
+    <div class="footer">
+        <p>by HeronSky</p>
+    </div>
+</body>
+</html>
