@@ -9,10 +9,11 @@
         :root {
             --primary-color: #3498db;
             --secondary-color: #e74c3c;
+            --accent-color: #f39c12;
             --hover-primary: #2980b9;
             --hover-secondary: #c0392b;
             --text-color: #2D3436;
-            --background-color: #FFFFFF;
+            --background-color: #ADD8E6;
             --banner-bg: #BDC3C7;
             --banner-text: #2C3E50;
             --error-color: #E74C3C;
@@ -23,11 +24,12 @@
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--background-color);
+            background-image: none;
             color: var(--text-color);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
-            font-size: 16px;
+            line-height: 1.8;
+            font-size: 17px;
             background-size: cover;
             background-repeat: no-repeat;
             display: flex;
@@ -36,10 +38,10 @@
         }
 
         .banner {
-            background-color: var(--banner-bg);
+            background-color: transparent;
             color: var(--banner-text);
             text-align: center;
-            padding: 60px 20px;
+            padding: 70px 25px;
             border-radius: 8px;
             margin-bottom: 30px;
             width: 100%;
@@ -48,6 +50,7 @@
             align-items: center;
             box-shadow: none;
             max-width: 1200px;
+            border: none;
         }
 
         h1 {
@@ -62,7 +65,7 @@
         form {
             background-color: transparent;
             box-shadow: none;
-            padding: 30px;
+            padding: 35px;
             border-radius: 8px;
             gap: 20px;
             align-items: center;
@@ -82,21 +85,23 @@
         }
 
         input[type="number"] {
-            padding: 12px;
-            border: 1px solid var(--text-color);
+            padding: 14px;
+            border: 1px solid var(--primary-color);
             border-radius: 4px;
             font-size: 16px;
-            background-color: transparent;
+            background-color: #ffffff;
             color: var(--text-color);
-            transition: none;
+            box-shadow: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
             width: 80%;
             max-width: 400px;
             margin: 0 auto;
         }
 
         input[type="number"]:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px rgba(243, 156, 18, 0.5);
+            transform: none;
         }
 
         button {
@@ -104,7 +109,7 @@
             color: #ffffff;
             padding: 12px 24px;
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 1em;
             transition: background-color 0.3s ease, transform 0.2s ease;
@@ -112,11 +117,11 @@
             max-width: 220px;
             align-self: center;
             margin: 0 auto;
-            box-shadow: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         button:hover {
-            background-color: var(--hover-primary);
+            background-color: var(--accent-color);
             transform: translateY(-2px);
         }
 
@@ -140,6 +145,7 @@
             font-size: 1.1em;
             margin: 0 auto;
             border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .error {
@@ -171,6 +177,7 @@
             align-items: center;
             text-align: center;
             max-width: 1200px;
+            border: none;
         }
 
         h2 {
@@ -383,6 +390,11 @@
             box-shadow: none;
         }
 
+        .dark-mode .banner, 
+        .dark-mode .content-section {
+            color: var(--text-color);
+        }
+
         .switch {
             position: fixed;
             top: 20px;
@@ -506,8 +518,6 @@
             });
         });
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5967859581176130"
-     crossorigin="anonymous"></script>
 </head>
 <body>
     <h1>Heron's Formula Calculator</h1>
